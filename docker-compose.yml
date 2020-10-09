@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  webserver:
+    image: nginx
+    container_name: webserver
+    restart: always
+    ports:
+      - '80:80'
+    volumes:
+      - web-root:/var/www/html
+      - ./nginx-conf:/etc/nginx/conf.d
+    network_mode: 'host'
+  mongodb:
+    user: $UID
+    image: mongo
+    ports:
+      - '27017-27019:27017-27019'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: tung
+      MONGO_INITDB_DATABASE: pulsemonitoring
+      MONGO_USERNAME: pxtthaontp
+      MONGO_PASSWORD: tungpham
+    volumes:
+      - ./data:/data/db
+      - ./mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro
+      - ./db_backup:/backup
+volumes:
+  web-root:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/
+      o: bind

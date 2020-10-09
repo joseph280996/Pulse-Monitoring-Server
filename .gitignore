@@ -1,0 +1,8 @@
+node_modules/
+.env
+dist/
+public/
+.vscode/
+data/
+db_backup/
+Pulse-Monitoring-399453d78a01.json
